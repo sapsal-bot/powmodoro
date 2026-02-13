@@ -94,7 +94,7 @@ const App: React.FC = () => {
       if ('Notification' in window && Notification.permission === 'granted') {
         new Notification("Pomodoro Session Complete!", {
           body: `Session ${newSessionCount} finished! Time for a well-deserved break.`,
-          icon: 'https://github.com/sapsal-bot/sapsal_stuff/blob/main/politecat.png?raw=true' // Using a floating image as a temporary icon
+          icon: '/politecat.png' // Using a local image as the icon
         });
       }
       return newSessionCount;
