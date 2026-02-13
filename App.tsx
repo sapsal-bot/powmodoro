@@ -39,6 +39,23 @@ const App: React.FC = () => {
 
   // Removed useEffect for API key status check on component mount
 
+  // Request notification permission on component mount
+  useEffect(() => {
+    if ('Notification' in window) {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'denied') {
+            console.warn("Notification permission denied. You will not receive session completion alerts.");
+          }
+        });
+      } else if (Notification.permission === 'denied') {
+        console.warn("Notification permission is denied. Please enable it in your browser settings to receive session completion alerts.");
+      }
+    } else {
+      console.warn("This browser does not support desktop notifications.");
+    }
+  }, []);
+
   // Simplified praise fetch: now synchronous and local
   // Fix: Mark fetchPraiseMessage as async and await the promise returned by getExtravagantPraise
   const fetchPraiseMessage = useCallback(async () => {
@@ -68,10 +85,20 @@ const App: React.FC = () => {
   */
 
   const handleComplete = useCallback(() => {
-    // Praise is now generated instantly on completion
     fetchPraiseMessage();
     setTimerStatus(TimerStatus.FINISHED);
-    setSessionCount(prev => prev + 1);
+    setSessionCount(prev => {
+      const newSessionCount = prev + 1;
+
+      // Show browser notification
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification("Pomodoro Session Complete!", {
+          body: `Session ${newSessionCount} finished! Time for a well-deserved break.`,
+          icon: 'https://github.com/sapsal-bot/sapsal_stuff/blob/main/politecat.png?raw=true' // Using a floating image as a temporary icon
+        });
+      }
+      return newSessionCount;
+    });
   }, [fetchPraiseMessage]);
 
   const handleToggle = useCallback(() => {
