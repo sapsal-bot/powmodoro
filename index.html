@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super-Meow Pomodoro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.js"></script>
+    <style>
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        @keyframes zoom-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        @keyframes rainbow-bg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes shake-intense {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(2px, 2px) rotate(1deg); }
+            50% { transform: translate(-2px, -2px) rotate(-1deg); }
+            75% { transform: translate(2px, -2px) rotate(1deg); }
+        }
+        /* New animation for floating images */
+        @keyframes drift-around {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.9; }
+            20% { transform: translate(15vw, -10vh) scale(1.1) rotate(10deg); opacity: 1; }
+            40% { transform: translate(-10vw, 20vh) scale(0.9) rotate(-15deg); opacity: 0.85; }
+            60% { transform: translate(25vw, -5vh) scale(1.05) rotate(5deg); opacity: 0.98; }
+            80% { transform: translate(-15vw, -20vh) scale(1.15) rotate(-8deg); opacity: 0.9; }
+            100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.9; }
+        }
+
+        .animate-bounce-subtle { animation: bounce-subtle 2s infinite ease-in-out; }
+        .animate-marquee { animation: marquee 10s linear infinite; }
+        .animate-zoom-pulse { animation: zoom-pulse 0.6s infinite ease-in-out; }
+        .animate-shake-intense { animation: shake-intense 0.2s infinite ease-in-out; }
+        .animate-drift-around { animation: drift-around var(--duration, 20s) infinite alternate ease-in-out; }
+        
+        .rainbow-animate {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: rainbow-bg 5s ease infinite;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
