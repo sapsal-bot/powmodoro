@@ -91,17 +91,23 @@ const App: React.FC = () => {
       const newSessionCount = prev + 1;
 
       // Show browser notification
-      if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification("Pomodoro Session Complete!", {
+if ('Notification' in window && Notification.permission === 'granted') {
+        // 1. 알림을 notification이라는 변수에 담습니다.
+        const notification = new Notification("Pomodoro Session Complete!", {
           body: `Session ${newSessionCount} finished! Time for a well-deserved break.`,
-          icon: '/politecat.png' // Using a local image as the icon
+          icon: '/politecat.png'
         });
+
+        // 2. 알림 클릭 시 탭으로 이동하는 기능을 추가합니다.
+        notification.onclick = (event) => {
+          event.preventDefault(); // 브라우저 기본 동작 방지
+          window.focus();         // 현재 탭(Powmodoro)에 포커스
+          notification.close();    // 클릭 시 알림창 닫기
+        };
       }
       return newSessionCount;
     });
-  }, [fetchPraiseMessage]);
-
-  const handleToggle = useCallback(() => {
+  }, [fetchPraiseMessage]);  const handleToggle = useCallback(() => {
     if (timerStatus === TimerStatus.RUNNING) {
       setTimerStatus(TimerStatus.PAUSED);
     } else {
